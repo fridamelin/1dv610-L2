@@ -13,7 +13,7 @@ class DateTimeView {
 		
 
 
-		$timeString = $day . ", the " . $dayOfMonth . $characters . " of " . $month . " " . $year . ", " . "The time is: " . $time; 
+		$timeString = $day . ", the " . $dayOfMonth . $characters . " of " . $month . " " . $year . ", " . "The time is " . $time; 
 
 		return '<p>' . $timeString . '</p>';
 	}

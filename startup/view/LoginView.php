@@ -20,6 +20,11 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
+		//FRIDA: Felmeddelandet ska vara här (ex.Username is missing) 
+		//if (self::$name == 0 && self::$password == 0)
+		//{
+		//	$message = "Username is missing!";
+		//}
 		$message = '';
 		
 		$response = $this->generateLoginFormHTML($message);
@@ -51,7 +56,7 @@ class LoginView {
 			<form method="post" > 
 				<fieldset>
 					<legend>Login - enter Username and password</legend>
-					<p id="' . self::$messageId . '">' . $message . '</p>
+					<p id="' . self::$messageId . '">' . $message .  '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
 					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
