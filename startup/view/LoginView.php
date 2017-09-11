@@ -20,6 +20,9 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
+
+	//$this->getRequestUserName();
+
 		$message = '';
 		if(isset($_POST[self::$name]) && isset($_POST[self::$password])){
 			if ($_POST[self::$name] == '')
@@ -32,9 +35,19 @@ class LoginView {
 			}			
 		}
 		
-		
+		//LOGGA IN 
 		$response = $this->generateLoginFormHTML($message);
-		//$response .= $this->generateLogoutButtonHTML($message);
+			if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password')
+		{
+			//FRIDA: Få funktionen IsLoggedIn att bli true å texten ändras!
+			//$this->renderIsLoggedIn($isLoggedIn);
+			$response .= $this->generateLogoutButtonHTML($message);
+			return $response; 
+		
+		} else 
+		{
+			$response = $this->generateLoginFormHTML($message);
+		}
 		return $response;
 	}
 
@@ -81,7 +94,14 @@ class LoginView {
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
+		//if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password')
+		//{
+		//	$response .= $this->generateLogoutButtonHTML($message);
+		//	return $response; 
+			//$this->generateLogoutButtonHTML($message);
+		}
+
 		//RETURN REQUEST VARIABLE: USERNAME
-	}
+//	}
 	
 }
