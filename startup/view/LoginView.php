@@ -28,6 +28,12 @@ class LoginView {
 		} else {
 			$message = '';
 		}
+		if (isset($_POST[self::$name]) == "Admin" && isset($_POST[self::$password]))
+		{
+			$message = "Password is missing";
+		} else {
+			$message = '';
+		}
 		
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
