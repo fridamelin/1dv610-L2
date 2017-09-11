@@ -20,12 +20,15 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		//FRIDA: Felmeddelandet ska vara här (ex.Username is missing) 
-		//if (self::$name == 0 && self::$password == 0)
-		//{
-		//	$message = "Username is missing!";
-		//}
-		$message = '';
+
+		
+		if (isset($_POST[self::$name]) && isset($_POST[self::$password]))
+		{
+			$message = "Username is missing!";
+		} else {
+			$message = '';
+		}
+		//
 		
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
