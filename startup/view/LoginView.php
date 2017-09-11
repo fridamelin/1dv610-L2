@@ -24,11 +24,10 @@ class LoginView {
 		
 		if (isset($_POST[self::$name]) && isset($_POST[self::$password]))
 		{
-			$message = "Username is missing!";
+			$message = "Username is missing";
 		} else {
 			$message = '';
 		}
-		//
 		
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
