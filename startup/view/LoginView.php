@@ -10,7 +10,7 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
-	
+	//require_once("LayoutView.php");
 
 	/**
 	 * Create HTTP response
@@ -21,7 +21,7 @@ class LoginView {
 	 */
 	public function response() {
 
-		session_start();
+		
 
 		$message = '';
 		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
@@ -29,25 +29,21 @@ class LoginView {
 			{
 				$message = "Password is missing";
 			}
-			//else if ($_POST[self::$name] == 'Admin' && $_POST[self::$password] != 'Password') {
-			//	self::$name = 'Admin';
-			//	$message = "Password is missing";
-			//}			
+				
 		
-			
-			//LOGGA IN 
 			$response = '';
 				if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password')
 			{
-				//FRIDA: Få funktionen IsLoggedIn att bli true och texten ändras!
-				//$this->renderIsLoggedIn($isLoggedIn);
-
 				//SESSION
 				$_SESSION['username'] = $_POST[self::$name];
 				$_SESSION['password'] = $_POST[self::$password];
 
 				$response = $this->generateLogoutButtonHTML($message);
-				return $response; 
+
+				//$renderisLoggedIn = new RenderisLoggedIn($isLoggedIn);
+				//$this->renderIsLoggedIn(isLoggedIn);
+				
+				return $response;
 			} else 
 			{
 				$message = "Wrong name or password";
@@ -104,11 +100,7 @@ class LoginView {
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
-		//if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password')
-		//{
-		//	$response .= $this->generateLogoutButtonHTML($message);
-		//	return $response; 
-			//$this->generateLogoutButtonHTML($message);
+		
 		}
 
 		//RETURN REQUEST VARIABLE: USERNAME
