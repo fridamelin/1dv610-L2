@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 //INCLUDE THE FILES NEEDED...
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
@@ -14,8 +14,9 @@ $v = new LoginView();
 $dtv = new DateTimeView();
 $lv = new LayoutView();
 
+session_start();
 
-echo($_SESSION['username']);
+//echo($_SESSION['username']);
 
 if(isset($_SESSION['username'])){
 $lv->render(true, $v, $dtv);

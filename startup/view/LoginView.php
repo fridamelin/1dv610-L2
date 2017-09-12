@@ -37,6 +37,7 @@ class LoginView {
 				//SESSION
 				$_SESSION['username'] = $_POST[self::$name];
 				$_SESSION['password'] = $_POST[self::$password];
+				$message = "Welcome";
 
 				$response = $this->generateLogoutButtonHTML($message);
 
@@ -55,6 +56,11 @@ class LoginView {
 			}
 		}
 				return $this->generateLoginFormHTML($message);
+
+				if($_POST[self::$logout]){
+					session_destroy();
+				}
+
 	}
 
 	/**
@@ -100,7 +106,7 @@ class LoginView {
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
-		
+		//Använd denna till att ha kvar namnet i value 
 		}
 
 		//RETURN REQUEST VARIABLE: USERNAME
