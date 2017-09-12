@@ -41,8 +41,6 @@ class LoginView {
 
 				$response = $this->generateLogoutButtonHTML($message);
 
-				//$renderisLoggedIn = new RenderisLoggedIn($isLoggedIn);
-				//$this->renderIsLoggedIn(isLoggedIn);
 				
 				return $response;
 			} else 
@@ -55,12 +53,24 @@ class LoginView {
 				
 			}
 		}
-				return $this->generateLoginFormHTML($message);
 
-				if($_POST[self::$logout]){
-					session_destroy();
-				}
+		if(isset($_POST[self::$logout])){
+			echo "testar att logga utttttt";
+			session_unset();
+			//unset($_SESSION['username']);
+		}
 
+		if(isset($_SESSION['username'])){
+			return $this->generateLogoutButtonHTML($message);
+		}else {
+			return $this->generateLoginFormHTML($message);
+		}
+			
+				
+				
+	}
+
+	public function logout(){
 	}
 
 	/**
