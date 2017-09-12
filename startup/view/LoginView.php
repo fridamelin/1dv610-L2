@@ -37,7 +37,7 @@ class LoginView {
 		
 		//LOGGA IN 
 		$response = $this->generateLoginFormHTML($message);
-			if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password')
+			if(isset($_POST[self::$name]) == 'Admin' && isset($_POST[self::$password]) == 'Password')
 		{
 			//FRIDA: Få funktionen IsLoggedIn att bli true å texten ändras!
 			//$this->renderIsLoggedIn($isLoggedIn);
