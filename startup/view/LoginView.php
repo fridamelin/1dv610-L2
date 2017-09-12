@@ -24,31 +24,31 @@ class LoginView {
 	//$this->getRequestUserName();
 
 		$message = '';
-		if(isset($_POST[self::$name]) && isset($_POST[self::$password])){
+		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
+			if ($_POST[self::$password] == '')
+			{
+				$message = "Password is missing";
+			}			
 			if ($_POST[self::$name] == '')
 			{
 				$message = "Username is missing";
 				
-			} else if ($_POST[self::$password] == '')
+			}
+			
+			//LOGGA IN 
+			$response = '';
+				if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password')
 			{
-				$message = "Password is missing";
-			}			
+				//FRIDA: Få funktionen IsLoggedIn att bli true och texten ändras!
+				//$this->renderIsLoggedIn($isLoggedIn);
+				$response = $this->generateLogoutButtonHTML($message);
+				return $response; 
+			
+			} else 
+			{
+			}
 		}
-		
-		//LOGGA IN 
-		$response = $this->generateLoginFormHTML($message);
-			if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password')
-		{
-			//FRIDA: Få funktionen IsLoggedIn att bli true å texten ändras!
-			//$this->renderIsLoggedIn($isLoggedIn);
-			$response .= $this->generateLogoutButtonHTML($message);
-			return $response; 
-		
-		} else 
-		{
-			$response = $this->generateLoginFormHTML($message);
-		}
-		return $response;
+				return $this->generateLoginFormHTML($message);
 	}
 
 	/**
