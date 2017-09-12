@@ -21,19 +21,19 @@ class LoginView {
 	 */
 	public function response() {
 
-	//$this->getRequestUserName();
+		session_start();
 
 		$message = '';
 		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
 			if ($_POST[self::$password] == '')
 			{
 				$message = "Password is missing";
-			}			
-			if ($_POST[self::$name] == '')
-			{
-				$message = "Username is missing";
-				
 			}
+			//else if ($_POST[self::$name] == 'Admin' && $_POST[self::$password] != 'Password') {
+			//	self::$name = 'Admin';
+			//	$message = "Password is missing";
+			//}			
+		
 			
 			//LOGGA IN 
 			$response = '';
@@ -41,11 +41,21 @@ class LoginView {
 			{
 				//FRIDA: Få funktionen IsLoggedIn att bli true och texten ändras!
 				//$this->renderIsLoggedIn($isLoggedIn);
+
+				//SESSION
+				$_SESSION['username'] = $_POST[self::$name];
+				$_SESSION['password'] = $_POST[self::$password];
+
 				$response = $this->generateLogoutButtonHTML($message);
 				return $response; 
-			
 			} else 
 			{
+				$message = "Wrong name or password";
+			}
+				if ($_POST[self::$name] == '')
+			{
+				$message = "Username is missing";
+				
 			}
 		}
 				return $this->generateLoginFormHTML($message);
