@@ -25,10 +25,7 @@ class LoginView {
 
 		$message = '';
 		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
-			if ($_POST[self::$password] == '')
-			{
-				$message = "Password is missing";
-			}
+			
 				
 		
 			$response = '';
@@ -46,6 +43,10 @@ class LoginView {
 			} else 
 			{
 				$message = "Wrong name or password";
+			}
+			if ($_POST[self::$password] == '')
+			{
+				$message = "Password is missing";
 			}
 				if ($_POST[self::$name] == '')
 			{
