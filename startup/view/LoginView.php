@@ -9,6 +9,7 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
+	public static $keepUsername = '';
 
 	//require_once("LayoutView.php");
 
@@ -24,53 +25,44 @@ class LoginView {
 		
 
 		$message = '';
-		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
-			
-				
-		
-			$response = '';
-				if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password')
-			{
+				if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
+					$response = '';
+
+				if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password'){
 				//SESSION
-				$_SESSION['username'] = $_POST[self::$name];
-				$_SESSION['password'] = $_POST[self::$password];
-				$message = "Welcome";
+					$_SESSION['username'] = $_POST[self::$name];
+					$_SESSION['password'] = $_POST[self::$password];
+					$message = "Welcome";
 
-				$response = $this->generateLogoutButtonHTML($message);
-
-				
-				return $response;
-			} else 
+					$response = $this->generateLogoutButtonHTML($message);
+					return $response;
+			} 
+			else 
 			{
-				$message = "Wrong name or password";
+					$message = "Wrong name or password";
 			}
-			if ($_POST[self::$password] == '')
-			{
-				$message = "Password is missing";
-				
+				if ($_POST[self::$password] == ''){
+					$this->getRequestUserName();
+					$message = "Password is missing";
 			}
-				if ($_POST[self::$name] == '')
-			{
-				$message = "Username is missing";
-				
+				if ($_POST[self::$name] == ''){
+					
+					$message = "Username is missing";
 			}
 		}
-
-		if(isset($_POST[self::$logout])){
-			$message = "Bye bye!";
-			echo "testar att logga utttttt";
-			session_unset();
+				if(isset($_POST[self::$logout])){
+					$message = "Bye bye!";
+					session_unset();
 		}
 
-		if(isset($_SESSION['username'])){
-			return $this->generateLogoutButtonHTML($message);
-		}else {
+				if(isset($_SESSION['username'])){
+					return $this->generateLogoutButtonHTML($message);
+		}
+		else 
+		{
 			return $this->generateLoginFormHTML($message);
 		}			
 	}
-
-
-
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -98,7 +90,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message .  '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . self::$keepUsername . '" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -114,7 +106,11 @@ class LoginView {
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
-		//Använd denna till att ha kvar namnet i value 
+		
+		$input = $_POST[self::$name];
+
+		return self::$keepUsername = $input;
+
 		}
 
 		//RETURN REQUEST VARIABLE: USERNAME
