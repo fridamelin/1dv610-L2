@@ -47,6 +47,7 @@ class LoginView {
 			if ($_POST[self::$password] == '')
 			{
 				$message = "Password is missing";
+				
 			}
 				if ($_POST[self::$name] == '')
 			{
@@ -56,23 +57,19 @@ class LoginView {
 		}
 
 		if(isset($_POST[self::$logout])){
+			$message = "Bye bye!";
 			echo "testar att logga utttttt";
 			session_unset();
-			//unset($_SESSION['username']);
 		}
 
 		if(isset($_SESSION['username'])){
 			return $this->generateLogoutButtonHTML($message);
 		}else {
 			return $this->generateLoginFormHTML($message);
-		}
-			
-				
-				
+		}			
 	}
 
-	public function logout(){
-	}
+
 
 	/**
 	* Generate HTML code on the output buffer for the logout button
