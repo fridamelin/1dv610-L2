@@ -25,7 +25,7 @@ $lv->render(false, $v, $dtv);
 }
 
 if(isset($_POST['LoginView::Logout'])){
-    //Borde sätta unset på SESSION['username'] istället
-    session_unset();
+    unset($_SESSION['username']);
+    //session_unset();
 }
 

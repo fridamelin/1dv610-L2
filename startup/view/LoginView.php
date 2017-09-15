@@ -10,9 +10,8 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 	public static $keepUsername = '';
-
-	
 	private $message = '';
+
 	/**
 	 * Create HTTP response
 	 *
@@ -22,25 +21,33 @@ class LoginView {
 	 */
 	public function response() {
 		{
-			if(isset($_SESSION['username'])){
+		if(isset($_SESSION['username'])){
 				return $this->generateLogoutButtonHTML($this->message);
 			}else {
 				return $this->generateLoginFormHTML($this->message);
 			}
-			//if sats - kolla om man är inloggad eller inte 
 		}			
 	}
 
 	public function prepare(){
 	
+
 		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
 			$response = '';
 
 		if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password'){
-				//SESSION
+			if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
+				$this->message = "Welcome";
+			} 
+				
+				
+			//SESSION
 			$_SESSION['username'] = $_POST[self::$name];
 			$_SESSION['password'] = $_POST[self::$password];
-			$this->message = "Welcome";
+		
+
+			
+			//if user already exists $this->message = '' else $this->message = 'Welcome'
 
 			$response = $this->generateLogoutButtonHTML($this->message);
 				return $response;
