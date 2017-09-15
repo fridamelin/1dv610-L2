@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 //INCLUDE THE FILES NEEDED...
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
@@ -18,13 +15,17 @@ $dtv = new DateTimeView();
 $lv = new LayoutView();
 
 session_start();
-if(isset($_POST['LoginView::Logout'])){
-    session_unset();
-}
 
+//Anropa funktion från v
+$v->prepare();
 if(isset($_SESSION['username'])){
 $lv->render(true, $v, $dtv);
 }else { 
 $lv->render(false, $v, $dtv);
+}
+
+if(isset($_POST['LoginView::Logout'])){
+    //Borde sätta unset på SESSION['username'] istället
+    session_unset();
 }
 
