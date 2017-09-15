@@ -39,16 +39,14 @@ class LoginView {
 			if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
 				$this->message = "Welcome";
 			} 
-				
-				
+			//Ta bort "Bye bye!" ifall man kör f5 när man redan är utloggad 
+			//if 
+	
+		
 			//SESSION
 			$_SESSION['username'] = $_POST[self::$name];
 			$_SESSION['password'] = $_POST[self::$password];
 		
-
-			
-			//if user already exists $this->message = '' else $this->message = 'Welcome'
-
 			$response = $this->generateLogoutButtonHTML($this->message);
 				return $response;
 			} 
@@ -57,19 +55,20 @@ class LoginView {
 			$this->message = "Wrong name or password";
 			}
 
-				//Messages 
+		//Messages 
 		if ($_POST[self::$password] == ''){
 			$this->getRequestUserName();
 			$this->message = "Password is missing";
 			}
 		if ($_POST[self::$name] == ''){
-					
 			$this->message = "Username is missing";
 			}
 		}
 		if(isset($_POST[self::$logout])){
+			if(isset($_SESSION['username']) && isset($_SESSION['password'])){
+				$this->message = "Bye bye!";
+		}
 			session_unset();
-			$this->message = "Bye bye!";
 		}
 
 		if(isset($_SESSION['username'])){			
