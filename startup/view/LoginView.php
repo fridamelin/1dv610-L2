@@ -29,24 +29,29 @@ class LoginView {
 		}			
 	}
 
+	//Kolla isset på RegisterView 
+
+
 	public function prepare(){
 	
-
 		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
 			$response = '';
 
-		if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password'){
+			if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password'){
+			
+			
 			if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
 				$this->message = "Welcome";
 			} 
-			//Ta bort "Bye bye!" ifall man kör f5 när man redan är utloggad 
-			//if 
-	
 		
 			//SESSION
 			$_SESSION['username'] = $_POST[self::$name];
 			$_SESSION['password'] = $_POST[self::$password];
-		
+			
+			if(isset($_POST[self::$keep])){
+				$this->keepUserLoggedIn($this->message);
+			}
+
 			$response = $this->generateLogoutButtonHTML($this->message);
 				return $response;
 			} 
@@ -63,12 +68,22 @@ class LoginView {
 		if ($_POST[self::$name] == ''){
 			$this->message = "Username is missing";
 			}
-		}
+		} else if (isset($_COOKIE['usernameCookie']) && isset($_COOKIE['passwordCookie'])){
+				if($_COOKIE['usernameCookie'] == 'Admin' && $_COOKIE['passwordCookie'] == 'Password'){
+					if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
+						$this->message = "Welcome back with cookie";
+			} 
+					$_SESSION['username'] = $_COOKIE['usernameCookie'];
+					$_SESSION['password'] = $_COOKIE['passwordCookie'];
+				}
+			}
 		if(isset($_POST[self::$logout])){
 			if(isset($_SESSION['username']) && isset($_SESSION['password'])){
 				$this->message = "Bye bye!";
-		}
+			}
 			session_unset();
+			setcookie('usernameCookie', '', time()-3600);
+			setcookie('passwordCookie', '', time()-3600);
 		}
 
 		if(isset($_SESSION['username'])){			
@@ -90,7 +105,6 @@ class LoginView {
 		';
 	}
 	
-
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -124,4 +138,11 @@ class LoginView {
 			$input = $_POST[self::$name];
 				return self::$keepUsername = $input;
 		}	
+	
+	private function keepUserLoggedIn($message){
+		setcookie('usernameCookie', $_SESSION['username'], time()+3600);
+		setcookie('passwordCookie', $_SESSION['password'], time()+3600);
+		
+		$message = "Welcome and you will be remembered";
+	}
 }
