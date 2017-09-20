@@ -28,16 +28,15 @@ class LoginView {
 			}
 		}			
 	}
-
-	//Kolla isset på RegisterView 
-
-
+	
 	public function prepare(){
 	
+		 $random = password_hash("Password", PASSWORD_DEFAULT);
 		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
 			$response = '';
 
-			if($_POST[self::$name] == 'Admin' && $_POST[self::$password] == 'Password'){
+			
+			if($_POST[self::$name] == 'Admin' && password_verify($_POST[self::$password], $random)){
 			
 			
 			if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
@@ -47,9 +46,13 @@ class LoginView {
 			//SESSION
 			$_SESSION['username'] = $_POST[self::$name];
 			$_SESSION['password'] = $_POST[self::$password];
-			
+			$_SESSION['password'] = $random;
+
+		
+
 			if(isset($_POST[self::$keep])){
-				$this->keepUserLoggedIn($this->message);
+				$this->keepUserLoggedIn();
+				$this->message = "Welcome and you will be remembered";
 			}
 
 			$response = $this->generateLogoutButtonHTML($this->message);
@@ -69,13 +72,18 @@ class LoginView {
 			$this->message = "Username is missing";
 			}
 		} else if (isset($_COOKIE['usernameCookie']) && isset($_COOKIE['passwordCookie'])){
-				if($_COOKIE['usernameCookie'] == 'Admin' && $_COOKIE['passwordCookie'] == 'Password'){
+				if($_COOKIE['usernameCookie'] == 'Admin' && password_verify("Password", $random)){
 					if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
 						$this->message = "Welcome back with cookie";
-			} 
+					} 
 					$_SESSION['username'] = $_COOKIE['usernameCookie'];
 					$_SESSION['password'] = $_COOKIE['passwordCookie'];
+				}else {
+					$this->message = "Wrong information in cookies";
+					setcookie('usernameCookie', '', time()-3600);
+					setcookie('passwordCookie', '', time()-3600);
 				}
+
 			}
 		if(isset($_POST[self::$logout])){
 			if(isset($_SESSION['username']) && isset($_SESSION['password'])){
@@ -139,10 +147,9 @@ class LoginView {
 				return self::$keepUsername = $input;
 		}	
 	
-	private function keepUserLoggedIn($message){
+	private function keepUserLoggedIn(){
 		setcookie('usernameCookie', $_SESSION['username'], time()+3600);
 		setcookie('passwordCookie', $_SESSION['password'], time()+3600);
 		
-		$message = "Welcome and you will be remembered";
 	}
 }

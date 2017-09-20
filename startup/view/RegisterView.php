@@ -2,7 +2,7 @@
 
 
 class RegisterView {
-  private static $login = 'RegisterView::Username';
+  private static $login = 'RegisterView::UserName';
   private static $messageId = 'RegisterView::Message';
   private static $password = 'RegisterView::Password';
   private static $checkPassword = 'RegisterView::PasswordRepeat';
@@ -11,7 +11,7 @@ class RegisterView {
   public function response() {
     return '
 			<h2>Register new user</h2>
-			<form method="post">
+			<form action="?register" method="post" enctype="multipart/formdata">
 				<fieldset>
 				<legend>Register a new user - Write username and password</legend>
 					<p id="' . self::$messageId . '"></p>
