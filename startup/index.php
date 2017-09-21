@@ -19,7 +19,7 @@ $rv = new RegisterView();
 session_start();
 
 //Anropa funktion från v
-$v->prepare();
+$v->login();
 if(isset($_SESSION['username'])){
     if(isset($_GET['register'])){
         $lv->render(true, $rv, $dtv);
