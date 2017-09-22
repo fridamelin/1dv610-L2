@@ -65,17 +65,17 @@ class LoginView {
 			if ($_POST[self::$name] == ''){
 				$this->message = "Username is missing";
 			}
-		} else if (isset($_COOKIE['CookieUsername']) && isset($_COOKIE['CookiePassword'])){
-				if($_COOKIE['CookieUsername'] == 'Admin' && password_verify("Password", $_COOKIE['CookiePassword'])){
+		} else if (isset($_COOKIE[self::$cookieName]) && isset($_COOKIE[self::$cookiePassword])){
+				if($_COOKIE[self::$cookieName] == 'Admin' && password_verify("Password", $_COOKIE[self::$cookiePassword])){
 					if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
 						$this->message = "Welcome back with cookie";
 					} 
-					$_SESSION['username'] = $_COOKIE['CookieUsername'];
-					$_SESSION['password'] = $_COOKIE['CookiePassword'];
+					$_SESSION['username'] = $_COOKIE[self::$cookieName];
+					$_SESSION['password'] = $_COOKIE[self::$cookiePassword];
 				} else {
 					$this->message = "Wrong information in cookies";
-					setcookie('CookieUsername', '', time()-3600);
-					setcookie('CookiePassword', '', time()-3600);
+					setcookie(self::$cookieName, '', time()-3600);
+					setcookie(self::$cookiePassword, '', time()-3600);
 				}
 
 			}
@@ -84,8 +84,8 @@ class LoginView {
 				$this->message = "Bye bye!";
 			}
 			session_unset();
-			setcookie('CookieUsername', '', time()-3600);
-			setcookie('CookiePassword', '', time()-3600);
+			setcookie(self::$cookieName, '', time()-3600);
+			setcookie(self::$cookiePassword, '', time()-3600);
 		}
 
 		if(isset($_SESSION['username'])){			
@@ -142,8 +142,8 @@ class LoginView {
 		}	
 	
 	private function keepUserLoggedIn(){
-		setcookie('CookieUsername', $_SESSION['username'], time()+3600);
-		setcookie('CookiePassword', $_SESSION['password'], time()+3600);
+		setcookie(self::$cookieName, $_SESSION['username'], time()+3600);
+		setcookie(self::$cookiePassword, $_SESSION['password'], time()+3600);
 		
 	}
 }
