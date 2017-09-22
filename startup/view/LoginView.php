@@ -30,7 +30,8 @@ class LoginView {
 	}
 	
 	public function login(){
-	
+		//$getPassword = getFromFile();
+		//$getAdmin = getFromAnotherFile();
 		 $random = password_hash("Password", PASSWORD_DEFAULT);
 		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
 			$response = '';
@@ -41,7 +42,7 @@ class LoginView {
 					$this->message = "Welcome";
 			} 
 			$_SESSION['username'] = $_POST[self::$name];
-			$_SESSION['password'] = $_POST[self::$password];
+			//$_SESSION['password'] = $_POST[self::$password];
 			$_SESSION['password'] = $random;
 
 				if(isset($_POST[self::$keep])){
@@ -57,7 +58,6 @@ class LoginView {
 				$this->message = "Wrong name or password";
 			}
 
-		//Messages 
 			if ($_POST[self::$password] == ''){
 				$this->getRequestUserName();
 				$this->message = "Password is missing";
@@ -66,13 +66,13 @@ class LoginView {
 				$this->message = "Username is missing";
 			}
 		} else if (isset($_COOKIE['CookieUsername']) && isset($_COOKIE['CookiePassword'])){
-				if($_COOKIE['CookieUsername'] == 'Admin' && password_verify("Password", $random)){
+				if($_COOKIE['CookieUsername'] == 'Admin' && password_verify("Password", $_COOKIE['CookiePassword'])){
 					if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
 						$this->message = "Welcome back with cookie";
 					} 
 					$_SESSION['username'] = $_COOKIE['CookieUsername'];
 					$_SESSION['password'] = $_COOKIE['CookiePassword'];
-				}else {
+				} else {
 					$this->message = "Wrong information in cookies";
 					setcookie('CookieUsername', '', time()-3600);
 					setcookie('CookiePassword', '', time()-3600);
