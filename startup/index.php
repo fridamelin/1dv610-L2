@@ -18,7 +18,7 @@ $rv = new RegisterView();
 
 session_start();
 
-//Anropa funktion från v
+
 $v->login();
 if(isset($_SESSION['username'])){
     if(isset($_GET['register'])){
@@ -36,6 +36,5 @@ if(isset($_SESSION['username'])){
 
 if(isset($_POST['LoginView::Logout'])){
     unset($_SESSION['username']);
-    //session_unset();
 }
 

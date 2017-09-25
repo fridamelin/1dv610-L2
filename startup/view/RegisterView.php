@@ -6,15 +6,27 @@ class RegisterView {
   private static $messageId = 'RegisterView::Message';
   private static $password = 'RegisterView::Password';
   private static $checkPassword = 'RegisterView::PasswordRepeat';
+  private static $register = 'RegisterView::Registration';
+  private $message = '';
 
+
+  public function register(){
+    if(isset($_POST[self::$register])){
+      if(strlen($_POST[self::$login]) < 3){
+        $this->message += 'Username has too few characters, at least 3 characters.';
+      }
+    }
+  }
   
   public function response() {
+    $this->register();
+   
     return '
 			<h2>Register new user</h2>
 			<form action="?register" method="post" enctype="multipart/formdata">
 				<fieldset>
 				<legend>Register a new user - Write username and password</legend>
-					<p id="' . self::$messageId . '"></p>
+						<p id="' . self::$messageId . '">' . $this->message .  '</p>
 					<label for="' . self::$login . '" >Username :</label>
 					<input type="text" size="20" name="'. self::$login .'" id="'. self::$login .'" value="" />
 					<br>
@@ -24,7 +36,7 @@ class RegisterView {
 					<label for="' . self::$checkPassword .'" >Repeat password :</label>
 					<input type="password" size="20" name="' . self::$checkPassword . '" id="' . self::$checkPassword . '" value="" />
 					<br>
-					<input id="submit" type="submit" name="DoRegistration"  value="Register" />
+					<input id="submit" type="submit" name="' . self::$register . '"  value="Register" />
 					<br>
 				</fieldset>
         </form>

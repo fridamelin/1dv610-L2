@@ -42,11 +42,10 @@ class LoginView {
 					$this->message = "Welcome";
 			} 
 			$_SESSION['username'] = $_POST[self::$name];
-			//$_SESSION['password'] = $_POST[self::$password];
 			$_SESSION['password'] = $random;
 
 				if(isset($_POST[self::$keep])){
-					$this->keepUserLoggedIn();
+					$this->keepUserLoggedIn(); 
 					$this->message = "Welcome and you will be remembered";
 				}	
 
