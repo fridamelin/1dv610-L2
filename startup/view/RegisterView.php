@@ -6,19 +6,16 @@ class RegisterView {
   private static $messageId = 'RegisterView::Message';
   private static $password = 'RegisterView::Password';
   private static $checkPassword = 'RegisterView::PasswordRepeat';
-  private static $register = 'RegisterView::Registration';
+  private static $register = 'RegisterView::Register';
   private $message = '';
-
 
   public function register(){
     if(isset($_POST[self::$register])){
       if(strlen($_POST[self::$login]) < 3){
-        $this->message = 'Username has too few characters, at least 3 characters.';
-      }if(strlen($_POST[self::$password]) < 6){
-        $this->message = 'Password has to few characters, at least 6 characters.';
-      }if(strlen($_POST[self::$login]) < 3 && strlen($_POST[self::$password]) < 6 ){
-        $this->message = 'Username has too few characters, at least 3 characters.<br>
-        Password has to few characters, at least 6 characters';
+        $this->message .= 'Username has too few characters, at least 3 characters.';
+      }
+      if(strlen($_POST[self::$password]) < 6){
+      $this->message .= '<br>Password has too few characters, at least 6 characters.';
       }
     }
   }
