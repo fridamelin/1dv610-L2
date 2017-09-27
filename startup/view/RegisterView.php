@@ -2,33 +2,38 @@
 
 
 class RegisterView {
-  private static $login = 'RegisterView::UserName';
-  private static $messageId = 'RegisterView::Message';
-  private static $password = 'RegisterView::Password';
-  private static $checkPassword = 'RegisterView::PasswordRepeat';
-  private static $register = 'RegisterView::Register';
-  private static $usernameStay = '';
-  private $message = '';
+	private static $login = 'RegisterView::UserName';
+	private static $messageId = 'RegisterView::Message';
+	private static $password = 'RegisterView::Password';
+	private static $checkPassword = 'RegisterView::PasswordRepeat';
+	private static $register = 'RegisterView::Register';
+	private static $usernameStay = '';
+	private $message = '';
 
-  public function register(){
-    if(isset($_POST[self::$register])){
-      if(strlen($_POST[self::$login]) < 3){
-        $this->message .= 'Username has too few characters, at least 3 characters.';
-      }
-      if(strlen($_POST[self::$password]) < 6){
-      $this->message .= '<br>Password has too few characters, at least 6 characters.';
-        if(strlen($_POST[self::$login]) > 3){
-          $this->propUsername();
-        }
-      }
-  
-    }
-  }
-  
-  public function response() {
-    $this->register();
-   
-    return '
+	public function register(){
+		if(isset($_POST[self::$register])){
+			if(strlen($_POST[self::$login]) < 3){
+				 $this->message .= 'Username has too few characters, at least 3 characters.';
+				 $this->propUsername();
+				}
+				if(strlen($_POST[self::$password]) < 6){
+				 $this->message .= '<br>Password has too few characters, at least 6 characters.';
+					if(strlen($_POST[self::$login]) > 3){
+						$this->propUsername();
+					}
+				}
+				if($_POST[self::$password] != $_POST[self::$checkPassword]){
+					$this->message .= '<br>Passwords do not match.';
+					$this->propUsername();
+				}
+			}
+		}
+	
+	
+	public function response() {
+		$this->register();
+	 
+		return '
 			<h2>Register new user</h2>
 			<form action="?register" method="post" enctype="multipart/formdata">
 				<fieldset>
@@ -46,22 +51,22 @@ class RegisterView {
 					<input id="submit" type="submit" name="' . self::$register . '"  value="Register" />
 					<br>
 				</fieldset>
-        </form>
-          ';
-  }
+				</form>
+					';
+	}
 
-  private function propUsername(){
-    $input = $_POST[self::$login];
+	private function propUsername(){
+		$input = $_POST[self::$login];
 				return self::$usernameStay = $input;
-  }
+	}
 
-  private function renderIsLoggedIn($isLoggedIn) {
-    if ($isLoggedIn) {
-      return '<h2>Logged in</h2>';
-    }
-    else {
-      return '<h2>Not logged in</h2>';
-    }
-  }
+	private function renderIsLoggedIn($isLoggedIn) {
+		if ($isLoggedIn) {
+			return '<h2>Logged in</h2>';
+		}
+		else {
+			return '<h2>Not logged in</h2>';
+		}
+	}
  
 }
