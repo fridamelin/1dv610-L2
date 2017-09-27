@@ -7,6 +7,7 @@ class RegisterView {
   private static $password = 'RegisterView::Password';
   private static $checkPassword = 'RegisterView::PasswordRepeat';
   private static $register = 'RegisterView::Register';
+  private static $usernameStay = '';
   private $message = '';
 
   public function register(){
@@ -16,7 +17,11 @@ class RegisterView {
       }
       if(strlen($_POST[self::$password]) < 6){
       $this->message .= '<br>Password has too few characters, at least 6 characters.';
+        if(strlen($_POST[self::$login]) > 3){
+          $this->propUsername();
+        }
       }
+  
     }
   }
   
@@ -30,7 +35,7 @@ class RegisterView {
 				<legend>Register a new user - Write username and password</legend>
 						<p id="' . self::$messageId . '">' . $this->message .  '</p>
 					<label for="' . self::$login . '" >Username :</label>
-					<input type="text" size="20" name="'. self::$login .'" id="'. self::$login .'" value="" />
+					<input type="text" size="20" name="'. self::$login .'" id="'. self::$login .'" value="' . self::$usernameStay . '" />
 					<br>
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" size="20" name="'. self::$password .'" id="' . self::$password . '" value="" />
@@ -43,6 +48,11 @@ class RegisterView {
 				</fieldset>
         </form>
           ';
+  }
+
+  private function propUsername(){
+    $input = $_POST[self::$login];
+				return self::$usernameStay = $input;
   }
 
   private function renderIsLoggedIn($isLoggedIn) {
