@@ -36,7 +36,6 @@ class LoginView {
 		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
 			$response = '';
 
-			
 			if($_POST[self::$name] == 'Admin' && password_verify($_POST[self::$password], $random)){
 				if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
 					$this->message = "Welcome";
@@ -48,7 +47,6 @@ class LoginView {
 					$this->keepUserLoggedIn(); 
 					$this->message = "Welcome and you will be remembered";
 				}	
-
 			$response = $this->generateLogoutButtonHTML($this->message);
 				return $response;
 			} 
@@ -61,6 +59,7 @@ class LoginView {
 				$this->getRequestUserName();
 				$this->message = "Password is missing";
 			}
+			
 			if ($_POST[self::$name] == ''){
 				$this->message = "Username is missing";
 			}

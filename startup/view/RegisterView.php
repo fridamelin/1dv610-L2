@@ -23,9 +23,14 @@ class RegisterView {
 					}
 				}
 				if($_POST[self::$password] != $_POST[self::$checkPassword]){
-					$this->message .= '<br>Passwords do not match.';
+					$this->message .= 'Passwords do not match.';
 					$this->propUsername();
 				}
+					if(strlen($_POST[self::$login]) > 3 
+					&& strlen($_POST[self::$password]) > 6 
+					&& $_POST[self::$checkPassword] == $_POST[self::$password]){
+						$this->message = 'Registered new user.';
+					} 
 			}
 		}
 	
