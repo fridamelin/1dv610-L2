@@ -20,34 +20,37 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
+		
+		if(isset($_SESSION['username']))
 		{
-		if(isset($_SESSION['username'])){
-				return $this->generateLogoutButtonHTML($this->message);
-			}else {
-				return $this->generateLoginFormHTML($this->message);
-			}
-		}			
+			return $this->generateLogoutButtonHTML($this->message);
+		}else
+		{
+			return $this->generateLoginFormHTML($this->message);
+		}		
 	}
 	
 	public function login(){
-		//$getPassword = getFromFile();
-		//$getAdmin = getFromAnotherFile();
 		 $random = password_hash("Password", PASSWORD_DEFAULT);
-		if(isset($_POST[self::$name]) || isset($_POST[self::$password])){
+		if(isset($_POST[self::$name]) || isset($_POST[self::$password]))
+		{
 			$response = '';
 
-			if($_POST[self::$name] == 'Admin' && password_verify($_POST[self::$password], $random)){
-				if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
+			if($_POST[self::$name] == 'Admin' && password_verify($_POST[self::$password], $random))
+			{
+				if(!isset($_SESSION['username']) && !isset($_SESSION['password']))
+				{
 					$this->message = "Welcome";
-			} 
-			$_SESSION['username'] = $_POST[self::$name];
-			$_SESSION['password'] = $random;
+				} 
+		$_SESSION['username'] = $_POST[self::$name];
+		$_SESSION['password'] = $random;
 
-				if(isset($_POST[self::$keep])){
+				if(isset($_POST[self::$keep]))
+				{
 					$this->keepUserLoggedIn(); 
 					$this->message = "Welcome and you will be remembered";
 				}	
-			$response = $this->generateLogoutButtonHTML($this->message);
+				$response = $this->generateLogoutButtonHTML($this->message);
 				return $response;
 			} 
 			else 
@@ -55,30 +58,37 @@ class LoginView {
 				$this->message = "Wrong name or password";
 			}
 
-			if ($_POST[self::$password] == ''){
+			if ($_POST[self::$password] == '')
+			{
 				$this->getRequestUserName();
 				$this->message = "Password is missing";
 			}
 			
-			if ($_POST[self::$name] == ''){
+			if ($_POST[self::$name] == '')
+			{
 				$this->message = "Username is missing";
 			}
-		} else if (isset($_COOKIE[self::$cookieName]) && isset($_COOKIE[self::$cookiePassword])){
-				if($_COOKIE[self::$cookieName] == 'Admin' && password_verify("Password", $_COOKIE[self::$cookiePassword])){
-					if(!isset($_SESSION['username']) && !isset($_SESSION['password'])){
+		} else if (isset($_COOKIE[self::$cookieName]) && isset($_COOKIE[self::$cookiePassword]))
+			{
+				if($_COOKIE[self::$cookieName] == 'Admin' && password_verify("Password", $_COOKIE[self::$cookiePassword]))
+				{
+					if(!isset($_SESSION['username']) && !isset($_SESSION['password']))
+					{
 						$this->message = "Welcome back with cookie";
 					} 
-					$_SESSION['username'] = $_COOKIE[self::$cookieName];
-					$_SESSION['password'] = $_COOKIE[self::$cookiePassword];
-				} else {
+				$_SESSION['username'] = $_COOKIE[self::$cookieName];
+				$_SESSION['password'] = $_COOKIE[self::$cookiePassword];
+				} else 
+				{
 					$this->message = "Wrong information in cookies";
 					setcookie(self::$cookieName, '', time()-3600);
 					setcookie(self::$cookiePassword, '', time()-3600);
 				}
-
 			}
-		if(isset($_POST[self::$logout])){
-			if(isset($_SESSION['username']) && isset($_SESSION['password'])){
+		if(isset($_POST[self::$logout]))
+		{
+			if(isset($_SESSION['username']) && isset($_SESSION['password']))
+			{
 				$this->message = "Bye bye!";
 			}
 			session_unset();
@@ -86,7 +96,8 @@ class LoginView {
 			setcookie(self::$cookiePassword, '', time()-3600);
 		}
 
-		if(isset($_SESSION['username'])){			
+		if(isset($_SESSION['username']))
+		{			
 			 $this->generateLogoutButtonHTML($this->message);
 		}
 	}
@@ -132,11 +143,9 @@ class LoginView {
 		';
 	}
 
-	//Keep the username in inputfield when password is wrong..
 	private function getRequestUserName() {
-
-			$input = $_POST[self::$name];
-				return self::$keepUsername = $input;
+		$input = $_POST[self::$name];
+		return self::$keepUsername = $input;
 		}	
 	
 	private function keepUserLoggedIn(){
