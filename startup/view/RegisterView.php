@@ -1,5 +1,6 @@
 <?php
 
+namespace view;
 
 class RegisterView {
 	private static $login = 'RegisterView::UserName';
@@ -32,7 +33,7 @@ class RegisterView {
 				$this->propUsername();
 			}
 		}
-		}
+	}
 	
 	public function response() {
 		$this->register();

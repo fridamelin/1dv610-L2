@@ -2,7 +2,7 @@
 
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
-require_once('view/LayoutView.php');
+require_once('view/LayoutView.php'); //denna ska vara kvar
 require_once('view/RegisterView.php');
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
@@ -15,7 +15,6 @@ $lv = new LayoutView();
 $rv = new RegisterView();
 
 session_start();
-
 
 $v->login();
 if(isset($_SESSION['username'])){
