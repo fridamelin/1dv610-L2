@@ -10,7 +10,8 @@ class LoginModel {
         $loginView = new \view\LoginView();
     }
 
-        //DENNA KOMMER FRÅN LOGINVIEW//
+		//DENNA KOMMER FRÅN LOGINVIEW//
+		//mste bara testa en kommentar 
     public function login(){
 		$username = $this->loginView->getRequestUserName();
         $password = $this->loginView->getRequestPassword();
